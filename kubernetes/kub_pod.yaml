@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-python-pod
+  labels:
+    app: hello-python
+spec:
+  containers:
+    - name: hello-python
+      image: akshayh7/hello-python:latest
+      ports:
+        - containerPort: 5000

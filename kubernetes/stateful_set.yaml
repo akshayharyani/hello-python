@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-python-service
+spec:
+  selector:
+    app: hello-python
+  type: NodePort
+  ports:
+    - name: http
+      protocol: "TCP"
+      port: 5000
+      nodePort: 30036
+      targetPort: 5000
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hello-python-stateful
+spec:
+  selector:
+    matchLabels:
+      app: hello-python
+  serviceName: hello-python-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: hello-python
+    spec:
+      containers:
+        - name: hello-python
+          image: akshayh7/hello-python:latest
+          ports:
+            - containerPort: 5000
